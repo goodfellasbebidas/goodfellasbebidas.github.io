@@ -1,0 +1,98 @@
+﻿.contenedor {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.texto-encima {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.centrado {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.promo {
+    color: white;
+}
+
+img.promo {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 200px;
+    width: 200px;
+}
+
+.promo-tag {
+    color: #807768;
+}
+
+.promo-desc {
+    font-size:24px;
+}
+
+.promo-precio {
+    font-size: 30px;
+}
+.boton{
+     background-image: url('../Img/botonbg.jpg');
+}
+.promo-button {
+    margin-top: 70px;
+    margin-bottom: 70px;
+    border-radius: 60px !important;
+    font-size: 30px;
+    color: rgba(109,46,41, 1);
+    width: 100%;
+    cursor: pointer;
+}
+
+
+
+@media only screen and (max-width: 557px) {
+
+    .subTitle-marco {
+        width: 380px;
+    }
+
+    .subTitle {
+        font-size: 40px;
+        
+    }
+}
+
+.contenedorPopUp {
+    position: relative;
+}
+
+.superposicion {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    background-image: url('../Img/Promo/promohover.png');
+    background-size: cover;
+    opacity: .8;
+    overflow: hidden;
+    width: 200px;
+    height: 0;
+    transition: .5s ease;
+    vertical-align: middle;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    border-radius: 20px 40px 20px 40px;
+    transition: .5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+.contenedorPopUp:hover .superposicion {
+    bottom: 0;
+    height: 100%;
+}
+

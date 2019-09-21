@@ -1,0 +1,30 @@
+﻿div.carrito {
+    position: relative;
+    width: 75px;
+    height: 75px;
+    margin-right: 25px;
+    background-image: url('../Img/shopping-cart_opt.png');
+    cursor:pointer;
+}
+
+img.carrito {
+    position: relative;
+    width: 75px;
+    height: 75px;
+    margin-right: 25px
+}
+
+.carrito-numero {
+    position: absolute;
+    top: 35%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    color:white;
+}
+
+@media only screen and (max-width: 557px) {
+
+    div.carrito {
+        display: none
+    }
+}
