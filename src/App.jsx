@@ -2,21 +2,24 @@ import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import Home from './Home'
 import Product from './Product'
+import Cart from './Cart'
 import { actualizarCarrito, cerrarDescargarPrecios } from './functions'
 import { createBrowserHistory } from "history";
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import Config from './config'
+
 
 function App() {
     const customHistory = createBrowserHistory();
-    const [goToCart, setGoToCart] = useState(false)
+
+    const descargarPrecios = () => {
+        window.location.href = Config.UrlApi + "api/home/downloadfile"
+    }
     useEffect(() => {
-        if (!goToCart)
-            actualizarCarrito()
+        actualizarCarrito()
 
     })
-    if (goToCart) {
-        return (<Redirect to="/Cart" />)
-    }
+
     return (
         <div className="App">
             <div className="loading">Loading&#8230;</div>
@@ -33,7 +36,7 @@ function App() {
                 </div>
                 <div className="col-md-4">
 
-                    <div className="carrito float-right vertical-center" onClick={function () { setGoToCart(true) }}>
+                    <div className="carrito float-right vertical-center" onClick={function () { window.location.href = '/cart' }}>
                         <div id="carritonumero" className="carrito-numero">0</div>
                     </div>
                 </div>
@@ -97,7 +100,7 @@ function App() {
 
                 <Route path="/" exact component={Home} />
                 <Route path="/Productos" component={Product} />
-                <Route path="/Cart" component={Product} />
+                <Route path="/Cart" component={Cart} />
             </Router>
             <div className="row justify-content-md-center footer">
 
@@ -160,7 +163,7 @@ function App() {
             <div id="descargarprecios" className="fixed">
                 <div id="btnclosedescargarprecios" className="float-right unselectable" onClick={cerrarDescargarPrecios}>X</div>
                 <h4 className="center"> Descargue la lista completa de precios</h4>
-                <button id="btndescargarprecios" className=" center boton lista-precio-button" onclick="descargarPrecios()">
+                <button id="btndescargarprecios" className=" center boton lista-precio-button" onClick={descargarPrecios}>
                     Descargar
                 </button>
             </div>

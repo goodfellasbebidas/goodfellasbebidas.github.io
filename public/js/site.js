@@ -1,52 +1,52 @@
 ﻿
 
 
-$(document).ready(function () {
-    marcarItemMenu()
-    $("#idForm").submit(function (e) {
+window.$(document).ready(function () {
+    // marcarItemMenu()
+    // $("#idForm").submit(function (e) {
 
-        e.preventDefault();
+    //     e.preventDefault();
 
-        var form = $(this);
-        var url = 'Contacto/Send'
-        $('.loading').css('visibility', 'visible');
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: form.serialize(),
-            success: function (data) {
-                document.getElementById("idForm").reset();
-                $('.loading').css('visibility', 'hidden');
-                alert('El Mensaje Se Envió Con Exito');
+    //     var form = $(this);
+    //     var url = 'Contacto/Send'
+    //     $('.loading').css('visibility', 'visible');
+    //     $.ajax({
+    //         type: "POST",
+    //         url: url,
+    //         data: form.serialize(),
+    //         success: function (data) {
+    //             document.getElementById("idForm").reset();
+    //             $('.loading').css('visibility', 'hidden');
+    //             alert('El Mensaje Se Envió Con Exito');
 
-            },
-            error: function (data) {
-                $('.loading').css('visibility', 'hidden');
-                alert('Hubo Un Error. Intente Más Tarde.');
-            }
-        });
+    //         },
+    //         error: function (data) {
+    //             $('.loading').css('visibility', 'hidden');
+    //             alert('Hubo Un Error. Intente Más Tarde.');
+    //         }
+    //     });
 
 
-    });
-    $('#pModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget)
+    // });
+    window.$('#pModal').on('show.bs.modal', function (event) {
+        var button = window.$(event.relatedTarget)
         var descripcion = button.data('descripcion')
         var imagen = button.data('imagen')
         var precio = button.data('precio')
         var id = button.data('id')
 
-        var modal = $(this)
+        var modal = window.$(this)
         modal.find('.modal-title > span').text(descripcion)
         modal.find('#pImagenModal').attr('src', imagen);
         modal.find('#pId').val(id)
         modal.find('#pPrecio').val(precio)
-        $('#btnp').text('Agregar al carrito')
-        $('#btnp').attr("onclick", "agregarCarrito()");
+        window.$('#btnp').text('Agregar al carrito')
+        window.$('#btnp').attr("onclick", "agregarCarrito()");
     })
 
     // ver4Promos()
     // actualizarCarrito()
-    $('.loading').css('visibility', 'hidden');
+    window.$('.loading').css('visibility', 'hidden');
 });
 // function marcarItemMenu() {
 //     var url = window.location;
