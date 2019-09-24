@@ -7,30 +7,41 @@ const Home = () => {
 
     const [state, setState] = useState({
         carrouselViewModel: [],
-        promosViewModel: []
+        promosViewModel: [],
+        finishFetch: false
     })
     useEffect(() => {
-        var url = window.location;
-        var elements = document.querySelectorAll('ul.navbar-nav a')
-        for(let i = 0; i < elements.length; i++){
-            if(elements[i].href == url){
+        let url = window.location;
+        let elements = document.querySelectorAll('ul.navbar-nav a')
+        for (let i = 0; i < elements.length; i++) {
+            if (elements[i].href == url) {
                 elements[i].classList.add('active')
             }
+            else {
+                elements[i].classList.remove('active')
+            }
         }
-        fetch(Config.UrlApi + "api/home")
-            .then(response => response.json())
-            .then(data => {
-                setState(data)
-            })
+        if (!state.finishFetch) {
+            document.getElementsByClassName('loading')[0].style.visibility = "visible"
+
+            fetch(Config.UrlApi + "api/home")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementsByClassName('loading')[0].style.visibility = "hidden"
+
+                    setState({ ...data, finishFetch: true })
+                })
+        }
+
     })
 
-    
+
 
     return (
         <div>
-            <Carousel carrouselViewModel= {state.carrouselViewModel}/>
+            <Carousel carrouselViewModel={state.carrouselViewModel} />
             <Contact />
-            <Promos promosViewModel={state.promosViewModel}/>
+            <Promos promosViewModel={state.promosViewModel} />
         </div>
     )
 }

@@ -5,7 +5,7 @@ $(document).ready(function () {
     marcarItemMenu()
     $("#idForm").submit(function (e) {
 
-        e.preventDefault(); 
+        e.preventDefault();
 
         var form = $(this);
         var url = 'Contacto/Send'
@@ -13,7 +13,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             url: url,
-            data: form.serialize(), 
+            data: form.serialize(),
             success: function (data) {
                 document.getElementById("idForm").reset();
                 $('.loading').css('visibility', 'hidden');
@@ -22,7 +22,7 @@ $(document).ready(function () {
             },
             error: function (data) {
                 $('.loading').css('visibility', 'hidden');
-                alert('Hubo Un Error. Intente Más Tarde.'); 
+                alert('Hubo Un Error. Intente Más Tarde.');
             }
         });
 
@@ -44,37 +44,37 @@ $(document).ready(function () {
         $('#btnp').attr("onclick", "agregarCarrito()");
     })
 
-    ver4Promos()
-    actualizarCarrito()
+    // ver4Promos()
+    // actualizarCarrito()
     $('.loading').css('visibility', 'hidden');
 });
-function marcarItemMenu() {
-    var url = window.location;
-    var element = $('ul.navbar-nav a').filter(function () {
-        return this.href == url;
-    }).addClass('active').parent();
-}
+// function marcarItemMenu() {
+//     var url = window.location;
+//     var element = $('ul.navbar-nav a').filter(function () {
+//         return this.href == url;
+//     }).addClass('active').parent();
+// }
 
-function cerrarDescargarPrecios() {
-    $('#descargarprecios').hide()
-}
+// function cerrarDescargarPrecios() {
+//     $('#descargarprecios').hide()
+// }
 function descargarPrecios() {
     window.location.href = "/Home/DownloadFile"
 }
-function actualizarCarrito() {
-    if (!Cookies.get('carrito')) {
-        document.getElementById('carritonumero').innerText = 0
-    }
-    else {
-        var cantidad = 0
-        var carrito = JSON.parse(Cookies.get('carrito'))
-        var i;
-        for (i = 0; i < carrito.Items.length; i++) {
-            cantidad = cantidad + parseInt(carrito.Items[i].Cant)
-        }
-        document.getElementById('carritonumero').innerText = cantidad
-    }
-}
+// function actualizarCarrito() {
+//     if (!Cookies.get('carrito')) {
+//         document.getElementById('carritonumero').innerText = 0
+//     }
+//     else {
+//         var cantidad = 0
+//         var carrito = JSON.parse(Cookies.get('carrito'))
+//         var i;
+//         for (i = 0; i < carrito.Items.length; i++) {
+//             cantidad = cantidad + parseInt(carrito.Items[i].Cant)
+//         }
+//         document.getElementById('carritonumero').innerText = cantidad
+//     }
+// }
 function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
@@ -94,7 +94,7 @@ function agregarCarrito() {
     //$('#pModal').modal('hide')
     $('#btnp').text('Ir al Carrito')
     $('#btnp').attr("onclick", "irCart()");
-    
+
     document.getElementById('modalCantidad').value = 0;
 
     var compras
@@ -111,25 +111,14 @@ function agregarCarrito() {
     Cookies.set('carrito', compras)
     actualizarCarrito()
 }
-function ver4Promos() {
-    var i;
-    var elements = $(".promo.oculto")
-    for (i = 0; i < 4; i++) {
-        if (elements[i])
-            elements[i].classList.remove('oculto')
-    }
-    if ($(".promo.oculto").length == 0)
-        $('.promo-button[onclick="ver4Promos()"]').remove()
-}
+
 function irCart() {
     window.location.href = "/Cart"
 }
 function removeItemCart(tipo, id) {
     compras = JSON.parse(Cookies.get('carrito'))
     compras.Items = compras.Items.filter(function (value, index, arr) {
-
         return !(value.Tipo == tipo && value.Id == id)
-
     });
     Cookies.set('carrito', compras)
     window.location.href = "/Cart"

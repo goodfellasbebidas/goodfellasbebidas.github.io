@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import Home from './Home'
 import Product from './Product'
+import { actualizarCarrito, cerrarDescargarPrecios } from './functions'
 import { createBrowserHistory } from "history";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 
 function App() {
     const customHistory = createBrowserHistory();
+    const [goToCart, setGoToCart] = useState(false)
+    useEffect(() => {
+        if (!goToCart)
+            actualizarCarrito()
 
+    })
+    if (goToCart) {
+        return (<Redirect to="/Cart" />)
+    }
     return (
         <div className="App">
+            <div className="loading">Loading&#8230;</div>
             <div className="row">
                 <div className="col-md-4 ">
                 </div>
@@ -23,7 +33,7 @@ function App() {
                 </div>
                 <div className="col-md-4">
 
-                    <div className="carrito float-right vertical-center" onclick="irCart()">
+                    <div className="carrito float-right vertical-center" onClick={function () { setGoToCart(true) }}>
                         <div id="carritonumero" className="carrito-numero">0</div>
                     </div>
                 </div>
@@ -86,8 +96,8 @@ function App() {
         </h3>
 
                 <Route path="/" exact component={Home} />
-                <Route path="/Productos/"  component={Product} />
-                <Route path="/Productos/:category"  component={Product} />
+                <Route path="/Productos" component={Product} />
+                <Route path="/Cart" component={Product} />
             </Router>
             <div className="row justify-content-md-center footer">
 
@@ -148,7 +158,7 @@ function App() {
 
             </div>
             <div id="descargarprecios" className="fixed">
-                <div id="btnclosedescargarprecios" className="float-right unselectable" onclick="cerrarDescargarPrecios()">X</div>
+                <div id="btnclosedescargarprecios" className="float-right unselectable" onClick={cerrarDescargarPrecios}>X</div>
                 <h4 className="center"> Descargue la lista completa de precios</h4>
                 <button id="btndescargarprecios" className=" center boton lista-precio-button" onclick="descargarPrecios()">
                     Descargar
