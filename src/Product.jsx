@@ -1,6 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Config from './config'
 
+const [state, setState] = useState({
+    productoViewModel: []
+})
+
+useEffect(() => {
+    var url = window.location;
+    var elements = document.querySelectorAll('ul.navbar-nav a')
+    for (let i = 0; i < elements.length; i++) {
+        if (elements[i].href == url) {
+            elements[i].classList.add('active')
+        }
+    }
+    let categoryName = document.location.pathname.split('/')[2]
+    fetch(Config.UrlApi + "api/products/" + (categoryName ? categoryName : ''))
+        .then(response => response.json())
+        .then(data => {
+            setState(data)
+        })
+})
 const Product = () => {
+    const getProducts = () => {
+        const { productoViewModel } = state;
+        return (
+
+            <div id="promoRow" className="row">
+
+                {productoViewModel.map((product, index) => {
+                    return (
+                        <div id="promoCuadro" class="col col-md-3 promo">
+                            <div class="contenedorPopUp">
+                                <img id="promoImagen" class="promo center" src={product != null ? product.imagen : ''} alt="distribuidora" />
+                                <div class="superposicion" data-toggle="modal" data-target="#pModal" data-id={product.id} data-descripcion={product.nombre} data-imagen={product != null ? product.imagen : ''} data-precio={product.precio}>
+
+                                </div>
+                            </div>
+                            <p class="text-center promo-tag">Producto</p>
+                            <h3 class="text-center promo-precio ">${product.precio}</h3>
+                            <h3 class="text-center promo-desc">{product.precio}</h3>
+                        </div>
+                    )
+                })
+                } </div>)
+    }
 
 
     return (
@@ -13,17 +56,8 @@ const Product = () => {
             <h3 class="estilo estilo-40 estilo-size-30">Haga click en los productos para agregar al carrito</h3>
             <img src="/img/felchaabajo.svg" alt="distribuidora" width="60px" class="center" />
             <div id="promoRow" class="row">
-
-
-
-56i6tit6i
-
-
-
-
-
+                {getProducts()}
             </div>
-
 
             <div class="modal fade" id="pModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">

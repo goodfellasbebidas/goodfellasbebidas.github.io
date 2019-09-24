@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Contact from './Contact'
 import Carousel from './Carousel'
 import Promos from './Promos'
+import Config from './config'
 const Home = () => {
 
     const [state, setState] = useState({
@@ -16,7 +17,7 @@ const Home = () => {
                 elements[i].classList.add('active')
             }
         }
-        fetch("http://localhost:54930/api/home")
+        fetch(Config.UrlApi + "api/home")
             .then(response => response.json())
             .then(data => {
                 setState(data)
