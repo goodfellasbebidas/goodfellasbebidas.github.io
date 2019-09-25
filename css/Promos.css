@@ -42,7 +42,7 @@ img.promo {
     font-size: 30px;
 }
 .boton{
-     background-image: url('../Img/botonbg.jpg');
+     background-image: url('%PUBLIC_URL%/img/botonbg.jpg');
 }
 .promo-button {
     margin-top: 70px;
@@ -77,7 +77,7 @@ img.promo {
     bottom: 100%;
     left: 0;
     right: 0;
-    background-image: url('/css/Promo/promohover.png');
+    background-image: url('%PUBLIC_URL%/css/Promo/promohover.png');
     background-size: cover;
     opacity: .8;
     overflow: hidden;
