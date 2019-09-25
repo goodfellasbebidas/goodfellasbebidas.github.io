@@ -1,11 +1,25 @@
-import React,{useEffect} from 'react'
-
+import React, { useEffect } from 'react'
+import { agregarCarrito } from './functions'
 
 const Promos = (props) => {
     const { promosViewModel } = props
+
     useEffect(() => {
-        
+
     })
+
+    const onPromoClick = index => event => {
+        let promo = promosViewModel[index]
+        document.querySelector('.modal-title > span').textContent = promo.descripcion
+        document.getElementById('pImagenModal').src = promo.imagen
+        document.getElementById('pImagenModal').textContent = promo.id
+        document.getElementById('pPrecio').value = promo.precio.toFixed(2)
+        document.getElementById('pPrecio').disabled = true;
+        document.getElementById('btnp').textContent = 'Agregar al carrito'
+        document.getElementById('btnp').onclick = agregarCarrito
+        document.getElementById('modalCantidad').classList.remove('has-danger')
+    }
+
     const ver4Promos = () => {
         let elements = document.querySelectorAll(".promo.oculto")
         for (let i = 0; i < 4; i++) {
@@ -22,10 +36,10 @@ const Promos = (props) => {
 
                 {promosViewModel.map((promo, index) => {
                     return (
-                        <div id="promoCuadro" className= {index >= 0 && index < 4? "col col-md-3 promo": "col col-md-3 promo oculto"}>
+                        <div id="promoCuadro" className={index >= 0 && index < 4 ? "col col-md-3 promo" : "col col-md-3 promo oculto"}>
                             <div className="contenedorPopUp">
                                 <img id="promoImagen" className="promo center" src={promo != null ? promo.imagen : ''} alt="distribuidora" />
-                                <div className="superposicion" data-toggle="modal" data-target="#pModal" data-id={promo.id} data-descripcion={promo.descripcion} data-imagen={promo != null ? promo.imagen : ''} data-precio={promo.precio}></div>
+                                <div className="superposicion" onClick={onPromoClick(index)} data-toggle="modal" data-target="#pModal" data-id={promo.id} data-descripcion={promo.descripcion} data-imagen={promo != null ? promo.imagen : ''} data-precio={promo.precio}></div>
                             </div>
                             <p className="text-center promo-tag">Promo</p>
                             <p className="text-center promo-precio ">{"$" + promo.precio}</p>
@@ -84,14 +98,15 @@ const Promos = (props) => {
                             <input type="hidden" value="" id="pId" />
                             <input type="hidden" value="2" id="pTipo" />
                             <label className="col-form-label">Precio:</label>
-                            <input type="text" className="form-control" id="pPrecio" readonly />
+                            <input type="text" className="form-control" id="pPrecio" />
 
                             <label className="col-form-label">Cantidad:</label>
-                            <input type="number" className="form-control" id="modalCantidad" value="0" />
+                            {/* <input type="number" className="form-control" id="modalCantidad" value={cant} onChange={onChangeCant} /> */}
+                            <input type="number" className="form-control" id="modalCantidad" />
 
                         </div>
                         <div className="modal-footer">
-                            <button id="btnp" type="button" onclick="agregarCarrito()" className="center boton promo-button">Agregar al carrito</button>
+                            <button id="btnp" type="button" onClick={agregarCarrito} className="center boton promo-button">Agregar al carrito</button>
                         </div>
                     </div>
                 </div>

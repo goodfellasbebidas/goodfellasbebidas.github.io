@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import Config from './config'
-
+import { agregarCarrito } from './functions'
 
 const Product = () => {
     const [state, setState] = useState({
         productoViewModel: [],
         finishFetch: false
     })
-
+    const onProductClick = index => event => {
+        let product = state.productoViewModel[index]
+        document.querySelector('.modal-title > span').textContent = product.nombre
+        document.getElementById('pImagenModal').src = product.imagen
+        document.getElementById('pImagenModal').textContent = product.id
+        document.getElementById('pPrecio').value = product.precio.toFixed(2)
+        document.getElementById('pPrecio').disabled = true;
+        document.getElementById('btnp').textContent = 'Agregar al carrito'
+        document.getElementById('btnp').onclick = agregarCarrito
+        document.getElementById('modalCantidad').classList.remove('has-danger')
+    }
     useEffect(() => {
         var url = window.location;
         var elements = document.querySelectorAll('ul.navbar-nav a')
@@ -41,7 +51,7 @@ const Product = () => {
                         <div id="promoCuadro" className="col col-md-3 promo">
                             <div className="contenedorPopUp">
                                 <img id="promoImagen" className="promo center" src={product != null ? product.imagen : ''} alt="distribuidora" />
-                                <div className="superposicion" data-toggle="modal" data-target="#pModal" data-id={product.id} data-descripcion={product.nombre} data-imagen={product != null ? product.imagen : ''} data-precio={product.precio}>
+                                <div className="superposicion" onClick={onProductClick(index)} data-toggle="modal" data-target="#pModal" data-id={product.id} data-descripcion={product.nombre} data-imagen={product != null ? product.imagen : ''} data-precio={product.precio}>
 
                                 </div>
                             </div>
@@ -67,7 +77,7 @@ const Product = () => {
                 {state.productoViewModel.length > 0 ? getProducts() : null}
             </div>
 
-            <div className="modal fade" id="pModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="pModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -82,15 +92,15 @@ const Product = () => {
                             <input type="hidden" value="" id="pId" />
                             <input type="hidden" value="1" id="pTipo" />
                             <label className="col-form-label">Precio:</label>
-                            <input type="text" className="form-control" id="pPrecio" readonly />
+                            <input type="text" className="form-control" id="pPrecio" />
 
                             <label className="col-form-label">Cantidad:</label>
-                            <input type="number" className="form-control" id="modalCantidad" value="0" />
+                            <input type="number" className="form-control" id="modalCantidad" />
 
 
                         </div>
                         <div className="modal-footer">
-                            <button id="btnp" type="button" onclick="agregarCarrito()" className="center boton promo-button">Agregar al carrito</button>
+                            <button id="btnp" type="button" onClick={agregarCarrito} className="center boton promo-button">Agregar al carrito</button>
                         </div>
                     </div>
                 </div>
