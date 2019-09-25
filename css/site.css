@@ -1,7 +1,7 @@
 ﻿
 @font-face {
     font-family: 'BreeSerif-Regular';
-    src: url('../Font/BreeSerif-Regular.otf') format('opentype');
+    src: url('../font/BreeSerif-Regular.otf') format('opentype');
 }
 
 a {
@@ -19,7 +19,7 @@ a {
 
 body {
     /*background-image: url('../Img/black_background_wood-wallpaper-1920x1080.jpg');*/
-    background-image: url('../Img/textura-madera-en-negro-2802.jpg');
+    background-image: url('../img/textura-madera-en-negro-2802.jpg');
     font-family: "BreeSerif-Regular";
 }
 
