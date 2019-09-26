@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import Config from './config'
 import { agregarCarrito } from './functions'
 
-const Product = () => {
+const Product = (props) => {
     const [state, setState] = useState({
         productoViewModel: [],
         finishFetch: false
     })
+    const [category, setCategory] = useState()
+    const { match: { params } } = props
     const onProductClick = index => event => {
         let product = state.productoViewModel[index]
         document.querySelector('.modal-title > span').textContent = product.nombre
@@ -30,10 +32,17 @@ const Product = () => {
                 elements[i].classList.remove('active')
             }
         }
+        if (category != params.category) {
+            setCategory(params.category)
+            setState({
+                productoViewModel: state.productoViewModel,
+                finishFetch: false
+            })
+        }
         if (!state.finishFetch) {
-            let categoryName = document.location.pathname.split('/')[2]
+            // let categoryName = document.location.pathname.split('/')[2]
             document.getElementsByClassName('loading')[0].style.visibility = "visible"
-            fetch(Config.UrlApi + "api/products/" + (categoryName ? categoryName : ''))
+            fetch(Config.UrlApi + "api/products/" + (params.category ? params.category : ''))
                 .then(response => response.json())
                 .then(data => {
                     document.getElementsByClassName('loading')[0].style.visibility = "hidden"

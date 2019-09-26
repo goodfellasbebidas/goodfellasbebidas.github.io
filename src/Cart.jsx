@@ -86,7 +86,7 @@ const Cart = () => {
             <div className="container">
                 <div className="col col-md-12">
                     <div className="table-responsive">
-                        {state.cartViewModel.hasItems ? getTable() : <p className="white">No hay productos agregados al carrito</p>}
+                        {/* {state.cartViewModel.hasItems ? getTable() : <p className="white">No hay productos agregados al carrito</p>} */}
                         {state.cartViewModel.hasItems ? getModals() : null}
                     </div>
                 </div>

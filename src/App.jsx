@@ -5,7 +5,7 @@ import Product from './Product'
 import Cart from './Cart'
 import { actualizarCarrito, cerrarDescargarPrecios } from './functions'
 import { createBrowserHistory } from "history";
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect, DefaultRoute } from "react-router-dom";
 import Config from './config'
 
 
@@ -99,7 +99,7 @@ function App() {
         </h3>
 
                 <Route path="/" exact component={Home} />
-                <Route path="/Productos" component={Product} />
+                <Route path="/Productos/:category?" component={Product} />
                 <Route path="/Cart" component={Cart} />
             </Router>
             <div className="row justify-content-md-center footer">
