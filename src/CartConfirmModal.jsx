@@ -35,20 +35,21 @@ const CartConfirmModal = (props) => {
                         </div>
                         <div className="form-check">
                             <input className="form-check-input" type="radio" name="radioOptions" id="inlineRadio1" value="1" />
-                            <label className="form-check-label" for="inlineRadio1">Pagar Efectivo y retirar en el local ( - 10% Descuento )</label>
+                            <label className="form-check-label" htmlFor="inlineRadio1">Pagar Efectivo y retirar en el local ( - 10% Descuento )</label>
                         </div>
                         <div className="form-check">
                             <input className="form-check-input" type="radio" name="radioOptions" id="inlineRadio2" value="2" />
-                            <label className="form-check-label" for="inlineRadio2">Pagar online y retirar en el local</label>
+                            <label className="form-check-label" htmlFor="inlineRadio2">Pagar online y retirar en el local</label>
                         </div>
                         <div className="form-check">
                             <input className="form-check-input" type="radio" name="radioOptions" id="inlineRadio3" value="3" />
-                            <label className="form-check-label" for="inlineRadio3">Pagar online y delivery</label>
+                            <label className="form-check-label" htmlFor="inlineRadio3">Pagar online y delivery</label>
                         </div>
                         <div className=" direccion form-row">
                             <div className="form-group col-md-6">
                                 <label>Dirección</label>
-                                <input id="cartDireccion" className="form-control" placeholder="Ej: Ambrosetti 568, CABA" oninput="direccionChange(this.value)" />
+                                <input id="cartDireccion" className="form-control" placeholder="Ej: Ambrosetti 568, CABA"  />
+                                {/* onInput="direccionChange(this.value)" */}
                             </div>
                             <div className="form-group col-md-3">
                                 <label>Piso</label>
@@ -60,16 +61,17 @@ const CartConfirmModal = (props) => {
                             </div>
 
                             <iframe id="mapaCart" width="100%" height="300"
-                                src="https://maps.google.com/maps?width=100%&height=600&hl=es&q=&ie=UTF8&t=&z=15&iwloc=B&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                                src="https://maps.google.com/maps?width=100%&height=600&hl=es&q=&ie=UTF8&t=&z=15&iwloc=B&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"></iframe>
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="center boton promo-button confirmar oculto" onClick="confirmarCompra()">Confirmar</button>
+                        <button type="button" className="center boton promo-button confirmar oculto" >Confirmar</button>
                     </div>
                 </div>
             </div>
         </div>
     )
 }
+// onClick={confirmarCompra}
 
 export default CartConfirmModal

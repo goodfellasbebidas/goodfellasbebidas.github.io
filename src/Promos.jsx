@@ -84,7 +84,7 @@ const Promos = (props) => {
                 Si no encuentra lo que busca,
 <p>puede revisar todo nuestro <a href="/Productos" title="Todos Productos Online">catálogo completo de productos online</a></p>
             </h3>
-            <div className="modal fade" id="pModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="pModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">

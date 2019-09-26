@@ -40,7 +40,6 @@ const Product = (props) => {
             })
         }
         if (!state.finishFetch) {
-            // let categoryName = document.location.pathname.split('/')[2]
             document.getElementsByClassName('loading')[0].style.visibility = "visible"
             fetch(Config.UrlApi + "api/products/" + (params.category ? params.category : ''))
                 .then(response => response.json())

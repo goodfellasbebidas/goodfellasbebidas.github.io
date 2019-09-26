@@ -3,9 +3,11 @@ import CartConfirmDelivery from './CartConfirmDelivery'
 import CartConfirmModal from './CartConfirmModal'
 import Config from './config'
 import { removeItemCart } from './functions'
-const Cart = () => {
+const Cart = (props) => {
 
-    const [state, setState] = useState({ cartViewModel: { hasItems: false, productos: [], promos: [], total: 0.00 }, finishFetch: false })
+    const [state, setState] = useState({ cartViewModel: {}, finishFetch: false })
+
+
     useEffect(() => {
 
         if (!state.finishFetch) {
@@ -19,9 +21,11 @@ const Cart = () => {
                     setState({ cartViewModel: data, finishFetch: true })
                 })
         }
-    })
+
+    }, [])
 
     const getTable = () => {
+        const { cartViewModel } = state
         return (
             <div>
                 <table className="table cart">
@@ -34,21 +38,22 @@ const Cart = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {state.cartViewModel.promos ? state.cartViewModel.promos.map((promo, index) => {
+                        {cartViewModel.promos ? cartViewModel.promos.map((promo, index) => {
                             return (
-                                <tr>
-                                    <th scope="row"><span onClick={removeItemCart(2, promo.Id)}>x</span></th>
-                                    <td><div>{promo.descripcion}<img class="promo center" src={promo != null ? promo.imagen : ''} alt="Promo" /></div></td>
+                                <tr key={promo.Id}>
+                                    <th scope="row"><span >x</span></th>
+                                    <td><div>{promo.descripcion}<img className="promo center" src={promo != null ? promo.imagen : ''} alt="Promo" /></div></td>
                                     <td>{promo.cantidad}</td>
                                     <td>${promo.precio}</td>
                                 </tr>
                             )
                         }) : null}
-                        {state.cartViewModel.productos ? state.cartViewModel.productos.map((producto, index) => {
+                         {/* onClick={removeItemCart(1, producto.Id)} */}
+                        {cartViewModel.productos ? cartViewModel.productos.map((producto, index) => {
                             return (
-                                <tr>
-                                    <th scope="row"><span onClick={removeItemCart(1, producto.Id)}>x</span></th>
-                                    <td><div>{producto.descripcion}<img class="promo center" src={producto != null ? producto.imagen : ''} alt="Producto" /></div></td>
+                                <tr key={producto.Id}>
+                                    <th scope="row"><span>x</span></th>
+                                    <td><div>{producto.descripcion}<img className="promo center" src={producto != null ? producto.imagen : ''} alt="Producto" /></div></td>
                                     <td>{producto.cantidad}</td>
                                     <td>${producto.precio}</td>
                                 </tr>
@@ -60,7 +65,7 @@ const Cart = () => {
                             <th scope="row"></th>
                             <td> </td>
                             <td>Total: </td>
-                            <td>${state.cartViewModel.total}</td>
+                            <td>${cartViewModel.total}</td>
                         </tr>
                     </tfoot>
                 </table>
@@ -86,7 +91,7 @@ const Cart = () => {
             <div className="container">
                 <div className="col col-md-12">
                     <div className="table-responsive">
-                        {/* {state.cartViewModel.hasItems ? getTable() : <p className="white">No hay productos agregados al carrito</p>} */}
+                        {state.cartViewModel.hasItems ? getTable() : <p className="white">No hay productos agregados al carrito</p>}
                         {state.cartViewModel.hasItems ? getModals() : null}
                     </div>
                 </div>
