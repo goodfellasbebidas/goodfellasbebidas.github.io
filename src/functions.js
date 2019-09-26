@@ -1,3 +1,12 @@
+
+export const isOptionDelivery = () => {
+    return document.querySelector('input[name=radioOptions]:checked').value == '3'
+}
+
+export const isOptionCompraOnline = () => {
+    return document.querySelector('input[name=radioOptions]:checked').value == '2' || document.querySelector('input[name=radioOptions]:checked').value == '3'
+}
+
 export const agregarCarrito = () => {
 
     if (document.getElementById('modalCantidad').value < 1) {
@@ -8,7 +17,11 @@ export const agregarCarrito = () => {
         document.getElementById('modalCantidad').classList.add('has-danger')
         return;
     }
-    let compra = { Tipo: parseInt(document.getElementById('pTipo').value), Id: parseInt(document.getElementById('pId').value), Cant: parseInt(document.getElementById('modalCantidad').value) } //Tipo 1 es Producto. Tipo 2 es Promo
+    let compra = {
+        Tipo: parseInt(document.getElementById('pTipo').value),
+        Id: parseInt(document.getElementById('pId').value),
+        Cant: parseInt(document.getElementById('modalCantidad').value)
+    } //Tipo 1 es Producto. Tipo 2 es Promo
     document.getElementById('carritonumero').innerText = parseInt(document.getElementById('carritonumero').innerText) + parseInt(document.getElementById('modalCantidad').value);
     //$('#pModal').modal('hide')
     document.getElementById('btnp').textContent = 'Ir al Carrito'

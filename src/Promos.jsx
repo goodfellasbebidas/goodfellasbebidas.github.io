@@ -18,6 +18,7 @@ const Promos = (props) => {
         document.getElementById('btnp').textContent = 'Agregar al carrito'
         document.getElementById('btnp').onclick = agregarCarrito
         document.getElementById('modalCantidad').classList.remove('has-danger')
+        document.getElementById('pId').value = promo.id
     }
 
     const ver4Promos = () => {
