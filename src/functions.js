@@ -61,17 +61,6 @@ export const actualizarCarrito = () => {
     }
 }
 
-export const removeItemCart = (tipo, id) => {
-    let compras = {}
-    compras = JSON.parse(window.Cookies.get('carrito'))
-    compras.Items = compras.Items.filter(function (value, index, arr) {
-
-        return !(value.Tipo == tipo && value.Id == id)
-
-    });
-    window.Cookies.set('carrito', compras)
-    window.location.href = "/Cart"
-}
 export const cerrarDescargarPrecios = (e) => {
     document.querySelector('#descargarprecios').remove()
 }

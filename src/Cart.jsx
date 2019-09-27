@@ -2,11 +2,20 @@ import React, { useEffect, useState } from 'react'
 import CartConfirmDelivery from './CartConfirmDelivery'
 import CartConfirmModal from './CartConfirmModal'
 import Config from './config'
-import { removeItemCart } from './functions'
-const Cart = (props) => {
+const Cart = () => {
 
     const [state, setState] = useState({ cartViewModel: {}, finishFetch: false })
+    const removeItemCart = (tipo, id) => e => {
+        let compras = {}
+        compras = JSON.parse(window.Cookies.get('carrito'))
+        compras.Items = compras.Items.filter(function (value, index, arr) {
 
+            return !(value.Tipo == tipo && value.Id == id)
+
+        });
+        window.Cookies.set('carrito', compras)
+        window.location.href = "/Cart"
+    }
 
     useEffect(() => {
 
@@ -41,18 +50,17 @@ const Cart = (props) => {
                         {cartViewModel.promos ? cartViewModel.promos.map((promo, index) => {
                             return (
                                 <tr key={promo.Id}>
-                                    <th scope="row"><span >x</span></th>
+                                    <th scope="row"><span onClick={removeItemCart(2, promo.id)}>x</span></th>
                                     <td><div>{promo.descripcion}<img className="promo center" src={promo != null ? promo.imagen : ''} alt="Promo" /></div></td>
                                     <td>{promo.cantidad}</td>
                                     <td>${promo.precio}</td>
                                 </tr>
                             )
                         }) : null}
-                         {/* onClick={removeItemCart(1, producto.Id)} */}
                         {cartViewModel.productos ? cartViewModel.productos.map((producto, index) => {
                             return (
                                 <tr key={producto.Id}>
-                                    <th scope="row"><span>x</span></th>
+                                    <th scope="row"><span onClick={removeItemCart(1, producto.id)}>x</span></th>
                                     <td><div>{producto.descripcion}<img className="promo center" src={producto != null ? producto.imagen : ''} alt="Producto" /></div></td>
                                     <td>{producto.cantidad}</td>
                                     <td>${producto.precio}</td>
