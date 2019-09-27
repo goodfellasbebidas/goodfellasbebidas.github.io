@@ -17,6 +17,8 @@ const Cart = () => {
         window.location.href = "/Cart"
     }
 
+    
+
     useEffect(() => {
 
         if (!state.finishFetch) {
