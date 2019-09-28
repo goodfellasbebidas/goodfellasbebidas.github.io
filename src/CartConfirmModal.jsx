@@ -226,12 +226,12 @@ const CartConfirmModal = (props) => {
             document.querySelector('#cartDireccion').value = ''
             direccionChange('')
 
-            document.querySelector('.direccion').style.display = 'block'
+            document.querySelector('.direccion').classList.remove('oculto')
         }
         else {
             if (document.querySelector('#CartModal button.oculto') && document.querySelector('#CartModal button.oculto') != null)
                 document.querySelector('#CartModal button.oculto').classList.remove('oculto')
-            document.querySelector('.direccion').style.display = 'none'
+            document.querySelector('.direccion').classList.add('oculto')
         }
     }
 
@@ -278,7 +278,7 @@ const CartConfirmModal = (props) => {
                             <input className="form-check-input" type="radio" name="radioOptions" onClick={radioOptionsChange} id="inlineRadio3" value="3" />
                             <label className="form-check-label" htmlFor="inlineRadio3">Pagar online y delivery</label>
                         </div>
-                        <div className=" direccion form-row">
+                        <div className=" direccion form-row oculto">
                             <div className="form-group col-md-6">
                                 <label>Dirección</label>
                                 <input id="cartDireccion" className="form-control" placeholder="Ej: Ambrosetti 568, CABA" onInput={direccionChange}/>

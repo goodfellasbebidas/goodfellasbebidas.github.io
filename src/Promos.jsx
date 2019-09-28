@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
-import { agregarCarrito } from './functions'
-
+import React, { useEffect, useState } from 'react'
+import { actualizarCarrito } from './functions'
+import { Redirect, Link } from "react-router-dom";
 const Promos = (props) => {
     const { promosViewModel } = props
-
+    const [goToCart, setGoToCart] = useState(false)
     useEffect(() => {
 
     })
@@ -51,8 +51,47 @@ const Promos = (props) => {
                 } </div>)
     }
 
+    const agregarCarrito = () => {
 
+        if (document.getElementById('modalCantidad').value < 1) {
+            document.getElementById('modalCantidad').classList.add('has-danger')
+            return;
+        }
+        if (document.getElementById('modalCantidad').value > 99999) {
+            document.getElementById('modalCantidad').classList.add('has-danger')
+            return;
+        }
+        let compra = {
+            Tipo: parseInt(document.getElementById('pTipo').value),
+            Id: parseInt(document.getElementById('pId').value),
+            Cant: parseInt(document.getElementById('modalCantidad').value)
+        } //Tipo 1 es Producto. Tipo 2 es Promo
+        document.getElementById('carritonumero').innerText = parseInt(document.getElementById('carritonumero').innerText) + parseInt(document.getElementById('modalCantidad').value);
+        //$('#pModal').modal('hide')
+        document.getElementById('btnp').textContent = 'Ir al Carrito'
+        document.getElementById('btnp').onclick = function () { setGoToCart(true) }
+        // window.$('#btnp').text('Ir al Carrito')
+        // window.$('#btnp').attr("onclick", "irCart()");
 
+        document.getElementById('modalCantidad').value = 0;
+
+        let compras = {}
+        if (!window.Cookies.get('carrito')) {
+            compras = {
+                Items: []
+            }
+        }
+        else {
+            compras = JSON.parse(window.Cookies.get('carrito'))
+        }
+
+        compras.Items.push(compra)
+        window.Cookies.set('carrito', compras)
+        actualizarCarrito()
+    }
+if(goToCart){
+    return <Redirect to='/cart' />
+}
     return (
         <div>
             <div>
@@ -82,7 +121,7 @@ const Promos = (props) => {
             </div>
             <h3 className="estilo">
                 Si no encuentra lo que busca,
-<p>puede revisar todo nuestro <a href="/Productos" title="Todos Productos Online">catálogo completo de productos online</a></p>
+<p>puede revisar todo nuestro <Link to="/Productos">catálogo completo de productos online</Link></p>
             </h3>
             <div className="modal fade" id="pModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog" role="document">

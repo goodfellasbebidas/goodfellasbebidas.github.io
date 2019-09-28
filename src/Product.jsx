@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import Config from './config'
-import { agregarCarrito } from './functions'
-
+import { actualizarCarrito } from './functions'
+import { Redirect } from "react-router-dom";
 const Product = (props) => {
     const [state, setState] = useState({
         productoViewModel: [],
         finishFetch: false
     })
     const [category, setCategory] = useState()
+    const [goToCart, setGoToCart] = useState(false)
+    
     const { match: { params } } = props
     const onProductClick = index => event => {
         let product = state.productoViewModel[index]
@@ -49,6 +51,48 @@ const Product = (props) => {
                 })
         }
     })
+
+    const agregarCarrito = () => {
+
+        if (document.getElementById('modalCantidad').value < 1) {
+            document.getElementById('modalCantidad').classList.add('has-danger')
+            return;
+        }
+        if (document.getElementById('modalCantidad').value > 99999) {
+            document.getElementById('modalCantidad').classList.add('has-danger')
+            return;
+        }
+        let compra = {
+            Tipo: parseInt(document.getElementById('pTipo').value),
+            Id: parseInt(document.getElementById('pId').value),
+            Cant: parseInt(document.getElementById('modalCantidad').value)
+        } //Tipo 1 es Producto. Tipo 2 es Promo
+        document.getElementById('carritonumero').innerText = parseInt(document.getElementById('carritonumero').innerText) + parseInt(document.getElementById('modalCantidad').value);
+        //$('#pModal').modal('hide')
+        document.getElementById('btnp').textContent = 'Ir al Carrito'
+        document.getElementById('btnp').onclick = function () { setGoToCart(true) }
+        // window.$('#btnp').text('Ir al Carrito')
+        // window.$('#btnp').attr("onclick", "irCart()");
+
+        document.getElementById('modalCantidad').value = 0;
+
+        let compras = {}
+        if (!window.Cookies.get('carrito')) {
+            compras = {
+                Items: []
+            }
+        }
+        else {
+            compras = JSON.parse(window.Cookies.get('carrito'))
+        }
+
+        compras.Items.push(compra)
+        window.Cookies.set('carrito', compras)
+        actualizarCarrito()
+    }
+
+
+
     const getProducts = () => {
         const { productoViewModel } = state;
         return (
@@ -73,7 +117,9 @@ const Product = (props) => {
                 } </div>)
     }
 
-
+    if(goToCart){
+        return <Redirect to='/cart' />
+    }
     return (
         <div>
             <div className="contenedor center">

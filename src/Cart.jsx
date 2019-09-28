@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import CartConfirmDelivery from './CartConfirmDelivery'
 import CartConfirmModal from './CartConfirmModal'
 import Config from './config'
+import { actualizarCarrito } from './functions'
 const Cart = () => {
 
     const [state, setState] = useState({ cartViewModel: {}, finishFetch: false })
@@ -14,13 +15,13 @@ const Cart = () => {
 
         });
         window.Cookies.set('carrito', compras)
-        window.location.href = "/Cart"
+        setState({ cartViewModel: state.cartViewModel, finishFetch: false })
     }
 
     
 
     useEffect(() => {
-
+        actualizarCarrito()
         if (!state.finishFetch) {
             document.getElementsByClassName('loading')[0].style.visibility = "visible"
             var myHeaders = new Headers();
@@ -32,8 +33,12 @@ const Cart = () => {
                     setState({ cartViewModel: data, finishFetch: true })
                 })
         }
+        if(document.getElementsByClassName("modal-backdrop")[0]){
+            document.getElementsByTagName('body')[0].classList.remove('modal-open')
+             document.getElementsByClassName("modal-backdrop fade show")[0].remove()
+        }
 
-    }, [])
+    })
 
     const getTable = () => {
         const { cartViewModel } = state
