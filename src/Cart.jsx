@@ -33,7 +33,7 @@ const Cart = () => {
                     setState({ cartViewModel: data, finishFetch: true })
                 })
         }
-        if(document.getElementsByClassName("modal-backdrop")[0]){
+        if(document.getElementsByClassName("modal-backdrop fade show")[0]){
             document.getElementsByTagName('body')[0].classList.remove('modal-open')
              document.getElementsByClassName("modal-backdrop fade show")[0].remove()
         }
