@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { validateEmail } from './functionsW'
-
+import { validateEmail } from './functions'
+import Config from './config'
 const CartConfirmModal = (props) => {
     const { cartViewModel } = props
     // const [linkhref, setLinkHref] = useState('')
@@ -20,6 +20,52 @@ const CartConfirmModal = (props) => {
     const isOptionCompraOnline = () => {
         return document.querySelector('input[name=radioOptions]:checked').value == '2' || document.querySelector('input[name=radioOptions]:checked').value == '3'
     }
+
+    function crearVenta() {
+        var request = {}
+        request.Contacto = {}
+        request.Contacto.Nombre = document.getElementById('cartNombre').value
+        request.Contacto.Apellido = document.getElementById('cartApellido').value
+        request.Contacto.Email = document.getElementById('cartMail').value
+        request.Contacto.Telefono = document.getElementById('cartTel').value
+        if (isOptionDelivery()) {
+            request.Direccion = document.getElementById('cartDireccion').value + ' Piso: ' + document.getElementById('cartPiso').value + ' Depto: ' + document.getElementById('cartDepto').value
+            request.LinkGoogleMaps = document.getElementById('mapaCart').src
+        }
+        request.ReturnMercadoPagoLink = isOptionCompraOnline()
+        request.Tipo = 3
+        request.Estado = isOptionCompraOnline() ? 2 : 1;
+        request.Promos = JSON.parse(window.Cookies.get('carrito')).Items.filter(function (value) { return value.Tipo == 2 }).map(function (value) { return { Id: value.Id, Cantidad: value.Cant } })
+        request.Productos = JSON.parse(window.Cookies.get('carrito')).Items.filter(function (value) { return value.Tipo == 1 }).map(function (value) { return { Id: value.Id, Cantidad: value.Cant } })
+
+        document.getElementsByClassName('loading')[0].style.visibility = "visible"
+        document.getElementById('CartModal').style.visibility = "hidden"
+        var url = isOptionDelivery() ? 'api/cart/crearventaenvio' : 'api/cart/crearventa';
+        fetch(Config.UrlApi + url, { method: "POST", headers:{'venta': JSON.stringify(request)} })
+            .then(response => {
+                if (response.status == 200)
+                    return response.json()
+                else {
+                    alert("Hubo un error. Vuelva a intentarlo más tarde.")
+                    document.getElementsByClassName('loading')[0].style.visibility = "hidden"
+                }
+            })
+            .then(data => {
+                document.getElementsByClassName('loading')[0].style.visibility = "hidden"
+
+                window.Cookies.remove('venta')
+                window.Cookies.remove('carrito')
+                if (isOptionCompraOnline())
+                    window.location.href = JSON.parse(data).linkMP
+                else if (data && data != null) {
+                    alert("Se hizo la reserva con exito. Acerquese al local y con su mail retire los productos.")
+                    window.location.href = '/'
+                }
+                window.location.href = '/'
+            })
+    }
+
+
     function agregarDelivery(id) {
 
 
@@ -39,7 +85,7 @@ const CartConfirmModal = (props) => {
         compras.Items.push(compra)
         window.Cookies.set('carrito', compras)
     }
-    function confirmarCompra() {
+    function confirmarCompra(e) {
         var hasError
         if (document.getElementById('cartNombre').value == '') {
             document.getElementById('cartNombre').classList.add('has-danger')
@@ -182,7 +228,8 @@ const CartConfirmModal = (props) => {
             document.querySelector('.direccion').style.display = 'block'
         }
         else {
-            document.querySelector('#CartModal button.oculto').classList.remove('oculto')
+            if (document.querySelector('#CartModal button.oculto') && document.querySelector('#CartModal button.oculto') != null)
+                document.querySelector('#CartModal button.oculto').classList.remove('oculto')
             document.querySelector('.direccion').style.display = 'none'
         }
     }
@@ -250,7 +297,7 @@ const CartConfirmModal = (props) => {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="center boton promo-button confirmar oculto" >Confirmar</button>
+                        <button type="button" onClick={confirmarCompra} className="center boton promo-button confirmar oculto" >Confirmar</button>
                     </div>
                 </div>
             </div>
