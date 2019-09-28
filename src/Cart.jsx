@@ -68,7 +68,7 @@ const Cart = () => {
                             return (
                                 <tr key={producto.Id}>
                                     <th scope="row"><span onClick={removeItemCart(1, producto.id)}>x</span></th>
-                                    <td><div>{producto.descripcion}<img className="promo center" src={producto != null ? producto.imagen : ''} alt="Producto" /></div></td>
+                                    <td><div>{producto.nombre}<img className="promo center" src={producto != null ? producto.imagen : ''} alt="Producto" /></div></td>
                                     <td>{producto.cantidad}</td>
                                     <td>${producto.precio}</td>
                                 </tr>

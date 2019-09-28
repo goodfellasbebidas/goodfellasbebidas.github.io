@@ -17,10 +17,6 @@ function App() {
         window.location.href = Config.UrlApi + "api/home/downloadfile"
     }
     useEffect(() => {
-        console.log(getParameterByName('redirectto'))
-        
-        console.log(redirect.value)
-        console.log(redirect.path)
         if (getParameterByName('redirectto').length > 0) {
             setRedirect({ value: true, path: getParameterByName('redirectto') })
         }
