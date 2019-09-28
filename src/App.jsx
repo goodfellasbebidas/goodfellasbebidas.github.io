@@ -7,15 +7,19 @@ import { actualizarCarrito, cerrarDescargarPrecios } from './functions'
 import { createBrowserHistory } from "history";
 import { BrowserRouter as Router, Route, Link, Redirect, DefaultRoute } from "react-router-dom";
 import Config from './config'
+import { getParameterByName } from './functions'
 
 
 function App() {
     const customHistory = createBrowserHistory();
-    const [redirect, setRedirect] = useState(false)
+    const [redirect, setRedirect] = useState({ value: false, path: '' })
     const descargarPrecios = () => {
         window.location.href = Config.UrlApi + "api/home/downloadfile"
     }
     useEffect(() => {
+        if (getParameterByName('redirectto').length > 0) {
+            setRedirect({ value: true, path: getParameterByName('redirectto') })
+        }
         actualizarCarrito()
 
     })
@@ -37,14 +41,14 @@ function App() {
                     </div>
                     <div className="col-md-4">
 
-                        <div className="carrito float-right vertical-center" onClick={function () { setRedirect(true) }}>
+                        <div className="carrito float-right vertical-center" onClick={function () { setRedirect({ value: true, path: '/Cart' }) }}>
                             <div id="carritonumero" className="carrito-numero">0</div>
                         </div>
                     </div>
                 </div>
 
                 <nav className="navbar navbar-expand-md navbar-light navbar-fixed-top rounded">
-                    {redirect ? <Redirect to='/cart' /> : null}
+                    {redirect.value ? <Redirect to={redirect.path} /> : null}
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample10" aria-controls="navbarsExample10" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
 
@@ -88,6 +92,7 @@ function App() {
                 <Route path="/" exact component={Home} />
                 <Route path="/Productos/:category?" component={Product} />
                 <Route path="/Cart" component={Cart} />
+                <Route path="*" component={() => <Redirect to='/' />} />
 
                 <div className="row justify-content-md-center footer">
 

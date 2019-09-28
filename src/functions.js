@@ -65,12 +65,12 @@ export const cerrarDescargarPrecios = (e) => {
     document.querySelector('#descargarprecios').remove()
 }
 
-// export const getParameterByName = (name) => {
-//     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-//     let regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-//         results = regex.exec(location.search);
-//     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-// }
+export const getParameterByName = (name) => {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    let regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(window.location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 
 export const validateEmail = (email) => {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
