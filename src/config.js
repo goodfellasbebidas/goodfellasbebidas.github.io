@@ -1,4 +1,4 @@
 const Config = {
-    UrlApi : "http://localhost:54930/"
+    UrlApi : "https://goodfellasbebidas.herokuapp.com/"
 }
 export default Config

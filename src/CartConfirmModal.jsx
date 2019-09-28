@@ -52,16 +52,17 @@ const CartConfirmModal = (props) => {
             })
             .then(data => {
                 document.getElementsByClassName('loading')[0].style.visibility = "hidden"
-
                 window.Cookies.remove('venta')
                 window.Cookies.remove('carrito')
-                if (isOptionCompraOnline())
-                    window.location.href = JSON.parse(data).linkMP
+                if (isOptionCompraOnline() && data && data != null)
+                    window.location.href = data.linkMP
                 else if (data && data != null) {
                     alert("Se hizo la reserva con exito. Acerquese al local y con su mail retire los productos.")
                     window.location.href = '/'
                 }
-                window.location.href = '/'
+                else{
+                    window.location.href = '/'
+                }
             })
     }
 
@@ -204,7 +205,7 @@ const CartConfirmModal = (props) => {
 
     }
     function direccionChange(value) {
-        fetch("https://places.api.here.com/places/v1/discover/search?q=' + document.getElementById('cartDireccion').value + '&app_id=RBHSaqIhcPXzNhDE0iiA&app_code=8SEeYHdSPZkG77xmTnCCzA&at=-35.9303,-58.2873'")
+        fetch("https://places.api.here.com/places/v1/discover/search?q=" + document.getElementById('cartDireccion').value + "&app_id=RBHSaqIhcPXzNhDE0iiA&app_code=8SEeYHdSPZkG77xmTnCCzA&at=-35.9303,-58.2873")
             .then(response => response.json())
             .then(data => {
                 try {
@@ -280,7 +281,7 @@ const CartConfirmModal = (props) => {
                         <div className=" direccion form-row">
                             <div className="form-group col-md-6">
                                 <label>Dirección</label>
-                                <input id="cartDireccion" className="form-control" placeholder="Ej: Ambrosetti 568, CABA" />
+                                <input id="cartDireccion" className="form-control" placeholder="Ej: Ambrosetti 568, CABA" onInput={direccionChange}/>
                                 {/* onInput="direccionChange(this.value)" */}
                             </div>
                             <div className="form-group col-md-3">

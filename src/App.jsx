@@ -17,6 +17,10 @@ function App() {
         window.location.href = Config.UrlApi + "api/home/downloadfile"
     }
     useEffect(() => {
+        console.log(getParameterByName('redirectto'))
+        
+        console.log(redirect.value)
+        console.log(redirect.path)
         if (getParameterByName('redirectto').length > 0) {
             setRedirect({ value: true, path: getParameterByName('redirectto') })
         }
@@ -92,7 +96,7 @@ function App() {
                 <Route path="/" exact component={Home} />
                 <Route path="/Productos/:category?" component={Product} />
                 <Route path="/Cart" component={Cart} />
-                <Route path="*" component={() => <Redirect to='/' />} />
+                {/* <Route path="*" component={() => <Redirect to='/' />} /> */}
 
                 <div className="row justify-content-md-center footer">
 
